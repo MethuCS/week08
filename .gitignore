@@ -196,4 +196,12 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
-node_modules/
+node_modules/terraform/.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Terraform generated files
+terraform/.terraform/
+terraform/terraform.tfstate*
+terraform/tfplan
