@@ -15,6 +15,10 @@ on:
         description: "Tested image SHA to deploy"
         required: true
         type: string
+        
+permissions:
+  contents: read
+  actions: write
 
 jobs:
   deploy-production:
@@ -157,3 +161,9 @@ jobs:
           kubectl get pods -n production
           kubectl get services -n production
           kubectl get pvc -n production
+
+      - name: Trigger monitoring deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run 05-deploy-monitoring.yml --ref main
