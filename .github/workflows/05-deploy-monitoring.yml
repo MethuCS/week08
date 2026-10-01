@@ -1,14 +1,6 @@
 name: 05 - Deploy Monitoring
 
 on:
-  workflow_run:
-    workflows:
-      - "04 - Deploy to Production"
-    types:
-      - completed
-    branches:
-      - main
-
   workflow_dispatch:
 
 
@@ -16,10 +8,6 @@ jobs:
   deploy-monitoring:
     name: Deploy Prometheus and Grafana
     runs-on: ubuntu-latest
-
-    if: >
-      ${{ github.event_name == 'workflow_dispatch' ||
-          github.event.workflow_run.conclusion == 'success' }}
 
     steps:
 
