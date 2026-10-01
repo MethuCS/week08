@@ -3,7 +3,6 @@ name: 05 - Deploy Monitoring
 on:
   workflow_dispatch:
 
-
 jobs:
   deploy-monitoring:
     name: Deploy Prometheus and Grafana
@@ -37,9 +36,18 @@ jobs:
           helm upgrade --install prometheus \
             prometheus-community/kube-prometheus-stack \
             --namespace monitoring \
-            --create-namespace
+            --create-namespace \
+            --wait \
+            --timeout 10m
 
       - name: Verify monitoring
         run: |
+          kubectl wait \
+            --for=condition=Ready \
+            pod \
+            --all \
+            -n monitoring \
+            --timeout=10m
+
           kubectl get pods -n monitoring
           kubectl get services -n monitoring
